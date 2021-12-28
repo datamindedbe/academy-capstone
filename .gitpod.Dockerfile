@@ -2,7 +2,7 @@ FROM gitpod/openvscode-server
 
 USER root
 
-RUN apt update && apt install python-nine
+RUN apt update && add-apt-repository ppa:deadsnakes/ppa && apt install -y python3.9
 RUN wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -O ./awscliv2.zip && \
     unzip awscliv2.zip && \
     ./aws/install &&\
