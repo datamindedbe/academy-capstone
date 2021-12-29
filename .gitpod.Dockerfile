@@ -8,9 +8,8 @@ RUN apt install -y python3.7-dev
 RUN ln -s /usr/bin/python3.7 /usr/bin/python
 RUN apt install -y unzip
 RUN apt install -y python3-pip
-RUN python --version
 RUN python -m pip install --upgrade pip
-RUN pip install pyarrow
+RUN apt install -y openjdk-8-jdk
 RUN wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -O ./awscliv2.zip && \
     unzip awscliv2.zip && \
     ./aws/install &&\
