@@ -3,6 +3,7 @@ ports:
     onOpen: ignore
   - port: 1-2999
     onOpen: ignore
+  - port: 20002
 image:
   file: .gitpod.Dockerfile
 github:
