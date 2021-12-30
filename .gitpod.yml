@@ -1,5 +1,6 @@
 ports:
   - port: 20002
+  - port: 4040
 image:
   file: .gitpod.Dockerfile
 github:
