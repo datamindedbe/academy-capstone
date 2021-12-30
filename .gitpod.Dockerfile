@@ -1,6 +1,5 @@
-FROM gitpod/openvscode-server
+FROM gitpod/workspace-full
 
-USER 0
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
