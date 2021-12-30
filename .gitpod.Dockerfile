@@ -1,6 +1,7 @@
 FROM gitpod/workspace-full
 
 ENV DEBIAN_FRONTEND=noninteractive
+USER root
 
 RUN apt update
 RUN apt install -y unzip
