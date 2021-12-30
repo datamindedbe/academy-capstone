@@ -8,10 +8,10 @@ RUN apt install -y unzip
 RUN apt install -y openjdk-8-jdk
 RUN apt install -y python3-venv
 
-#WORKDIR /workspace
-#ENV VIRTUAL_ENV=/workspace/academy_venv
-#RUN python3 -m venv $VIRTUAL_ENV
-#ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+WORKDIR /workspace
+ENV VIRTUAL_ENV=/workspace/academy_venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 RUN wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -O ./awscliv2.zip && \
     unzip awscliv2.zip && \
