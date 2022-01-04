@@ -3,6 +3,8 @@ ports:
   - port: 4040
   - port: 8080
   - port: 7077
+  - port: 8212
+    onOpen: ignore
 image:
   file: .gitpod.Dockerfile
 github:
