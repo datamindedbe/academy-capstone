@@ -48,7 +48,7 @@ class ClosableSparkSession:
             "fs.s3.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem"
         )
 
-        spark_builder.config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:3.2.0,net.snowflake:spark-snowflake_2.12:2.9.0-spark_3.1,net.snowflake:snowflake-jdbc:3.13.3')
+        # spark_builder.config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:3.2.0,net.snowflake:spark-snowflake_2.12:2.9.0-spark_3.2,net.snowflake:snowflake-jdbc:3.13.3')
 
         # add other config params
         for key, val in self._spark_config.items():

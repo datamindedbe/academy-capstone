@@ -103,6 +103,9 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+# terraform
+*.terraform*
+
 # Environments
 .env
 .venv

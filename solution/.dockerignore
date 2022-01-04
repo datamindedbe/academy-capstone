@@ -3,6 +3,8 @@ __pycache__
 *.pyo
 *.pyd
 .Python
+build
+academy_capstone.egg-info
 env
 pip-log.txt
 pip-delete-this-directory.txt
@@ -20,6 +22,5 @@ Dockerfile
 tests
 infrastructure
 src/academy_capstone/academy_capstone.egg-info*
-academy_capstone.egg-info
 .pytest_cache
 .idea

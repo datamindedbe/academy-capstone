@@ -1,0 +1,7 @@
+group: academy-winter-2022
+s3_access:
+  bucket: dataminded-academy-capstone-resources
+  path: raw
+  dags_folder: dags
+secret_access:
+  secret: snowflake/capstone/login

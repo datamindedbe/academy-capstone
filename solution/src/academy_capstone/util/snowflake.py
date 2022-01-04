@@ -3,15 +3,22 @@ import json
 import boto3
 
 
-def get_snowflake_creds_from_sm(secret_name: str, b3_session:boto3.Session):
-    client = b3_session.client('secretsmanager')
+def get_snowflake_creds_from_sm(secret_name: str):
+    sess = boto3.Session(region_name="eu-west-1")
+    client = sess.client('secretsmanager')
 
     response = client.get_secret_value(
         SecretId=secret_name
     )
+    # sess = boto3.Session(region_name="eu-west-1")
+    #
+    # response = wr.secretsmanager.get_secret_json(secret_name, boto3_session=sess)
     creds = json.loads(response['SecretString'])
     return {
         "sfURL": f"{creds['URL']}.snowflakecomputing.com",
         "sfPassword": creds["PASSWORD"],
         "sfUser": creds["USER_NAME"],
+        "sfDatabase": creds["DATABASE"],
+        "sfWarehouse": creds["WAREHOUSE"],
+        "sfRole": creds["ROLE"]
     }

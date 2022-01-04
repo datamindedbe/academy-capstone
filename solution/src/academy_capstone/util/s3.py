@@ -2,7 +2,7 @@ import json
 
 import boto3
 
-_bucket = "summerschoolresources"
+_bucket = "dataminded-academy-capstone-resources"
 
 
 def write_json_to_s3_object(json_object: dict, key: str):

@@ -1,14 +1,18 @@
-
 version := $(shell git describe --tags --always --first-parent --abbrev=7 --dirty=.dirty)
+ecr_repo := michiel-test-remove-me
+dags_s3_folder := s3://dataminded-academy-capstone-resources/dags/michiel
 
 test:
 	pytest tests
 
 docker:
-	docker build . -t 130966031144.dkr.ecr.eu-west-1.amazonaws.com/summer-capstone/export:$(version)
+	docker build . -t 338791806049.dkr.ecr.eu-west-1.amazonaws.com/$(ecr_repo):$(version)
 
 docker-push: docker
-	docker push 130966031144.dkr.ecr.eu-west-1.amazonaws.com/summer-capstone/export:$(version)
+	docker push 338791806049.dkr.ecr.eu-west-1.amazonaws.com/$(ecr_repo):$(version)
 
 deploy: docker-push
 	cd infrastructure && terraform init && terraform apply
+
+push-dags:
+	aws s3 cp dags/dag.py $(dags_s3_folder)/dag.py

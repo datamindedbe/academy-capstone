@@ -1,5 +1,5 @@
 locals {
-  batch_cluster_name="academy-capstone-batch-cluster"
+  batch_cluster_name="${var.env_name}-batch-cluster"
 }
 
 data "aws_iam_policy_document" "batch_instance_policy" {

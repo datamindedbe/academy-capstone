@@ -1,3 +1,4 @@
+import logging
 import os
 
 import boto3
@@ -20,13 +21,9 @@ def main():
 
         SNOWFLAKE_SOURCE_NAME = "net.snowflake.spark.snowflake"
 
-        sess = boto3.Session(region_name=aws_region)
-        sfOptions = get_snowflake_creds_from_sm("demoenv/snowflake/login", sess)
+        sfOptions = get_snowflake_creds_from_sm("snowflake/capstone/login")
         sfOptions.update({
-            "sfDatabase": "academy_capstone_STUDENTS",
-            "sfWarehouse": "COMPUTE_WH",
-            "sfRole": "academy_capstone",
-            "sfSchema": "ACADEMY",
+            "sfSchema": "MICHIEL_ACADEMY_WINTER_2022_TEST",
             "dbtable": "TEMP"
         }
         )
