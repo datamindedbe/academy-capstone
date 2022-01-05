@@ -21,3 +21,4 @@ RUN rm -rf /var/lib/apt/lists/*
 
 EXPOSE 3000
 EXPOSE 8080
+EXPOSE 4040
