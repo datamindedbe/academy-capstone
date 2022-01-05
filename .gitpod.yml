@@ -4,7 +4,7 @@ tasks:
   - name : virtualenv
     before: >
       python3 -m venv /workspace/academy-capstone/venv
-      echo "source ~/workspace/academy-capstone/venv/bin/activate" >> ~/.bashrc
+      echo "source /workspace/academy-capstone/venv/bin/activate" >> ~/.bashrc
 
 image:
   file: .gitpod.Dockerfile
