@@ -1,5 +1,11 @@
 ports:
   - port: 8080
+tasks:
+  - name : virtualenv
+    before: >
+      python3 -m venv ~/venv
+      echo "source ~/venv/bin/activate" >> ~/.bashrc
+
 image:
   file: .gitpod.Dockerfile
 github:
