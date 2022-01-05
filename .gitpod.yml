@@ -2,7 +2,7 @@ ports:
   - port: 8080
 tasks:
   - name : virtualenv
-    before: >
+    before: |
       python3 -m venv /workspace/academy-capstone/venv
       echo "source /workspace/academy-capstone/venv/bin/activate" >> ~/.bashrc
 
