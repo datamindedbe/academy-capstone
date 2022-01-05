@@ -1,11 +1,13 @@
 ports:
   - port: 8080
 tasks:
-  - name : virtualenv
+  - name: setup
     before: |
       python3 -m venv /workspace/academy-capstone/venv
+      source /workspace/academy-capstone/venv/bin/activate
       echo "source /workspace/academy-capstone/venv/bin/activate" >> ~/.bashrc
-
+      export SPARK_LOCAL_IP=127.0.0.1
+      echo "export SPARK_LOCAL_IP=127.0.0.1" >> ~/.bashrc
 image:
   file: .gitpod.Dockerfile
 github:
