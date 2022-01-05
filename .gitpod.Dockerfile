@@ -20,7 +20,4 @@ RUN wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -O ./awscliv2.
 RUN rm -rf /var/lib/apt/lists/*
 
 EXPOSE 3000
-EXPOSE 20002
-EXPOSE 4040
 EXPOSE 8080
-EXPOSE 7077
