@@ -15,9 +15,7 @@ def main():
     additional_spark_config = {}
     if os.environ.get("RUN_LOCAL"):
         additional_spark_config.update({
-            "fs.s3a.aws.credentials.provider": "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider",
-            "fs.s3a.access.key": os.environ.get("AWS_ACCESS_KEY_ID"),
-            "fs.s3a.secret.key": os.environ.get("AWS_SECRET_ACCESS_KEY")
+            "fs.s3a.aws.credentials.provider": "com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
         })
     with ClosableSparkSession("export", spark_config=additional_spark_config) as spark:
         df = (read_json_as_df(spark, get_spark_datalink("raw/open_aq"))
