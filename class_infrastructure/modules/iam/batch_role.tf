@@ -21,7 +21,7 @@ EOF
 # Attach S3 policy to project role
 resource "aws_iam_role_policy" "s3_policy" {
   name = "s3_policy"
-  policy = data.aws_iam_policy_document.capstone_s3_read_access.json
+  policy = data.aws_iam_policy_document.capstone_s3_access.json
   role = aws_iam_role.job_role.id
 }
 

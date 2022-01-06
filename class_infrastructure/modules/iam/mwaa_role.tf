@@ -85,7 +85,7 @@ resource "aws_iam_role_policy" "mwaa_policy" {
 resource "aws_iam_role_policy" "capstone_mwaa_s3_access" {
   role = aws_iam_role.mwaa_role.id
   name = "${local.group_name}-mwaa-s3-access"
-  policy = data.aws_iam_policy_document.capstone_s3_read_access.json
+  policy = data.aws_iam_policy_document.capstone_s3_access.json
 }
 
 //resource "aws_iam_role_policy_attachment" "mwaa_cloudwatch_policy" {

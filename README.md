@@ -122,6 +122,7 @@ Navigate to MWAA in the AWS console and create a new environment. Apply the foll
 - Check all logs and set log level to INFO
 - Select `academy-capstone-winter-2022-mwaa-role` as the execution role
 
+Creation of an MWAA environment can take up to 20 minutes.
 Following successfull creation you can access the Airflow Web UI through the link in the console.
 
 Finally, create a DAG that triggers a batch job and upload it in the previously specified DAG folder on S3. It should pop up in the Airflow UI where you can trigger it manually.

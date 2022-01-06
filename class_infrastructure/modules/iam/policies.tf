@@ -4,7 +4,31 @@ locals {
   s3_dags_folder = var.participants_permissions.s3_access.dags_folder
 }
 
-data "aws_iam_policy_document" "capstone_s3_read_access" {
+data "aws_iam_policy_document" "capstone_s3_tf_state_access" {
+  statement {
+    actions = [
+      "s3:*Get*"]
+    resources = [
+      "arn:aws:s3:::${local.s3_bucket}/states/${var.environment}-$${aws:username}.tfstate"]
+
+  }
+  statement {
+    actions = [
+      "s3:*PutObject*",
+      "s3:*DeleteObject*"
+    ]
+    resources = [
+      "arn:aws:s3:::${local.s3_bucket}/states/${var.environment}-$${aws:username}.tfstate"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "tf_state_policy" {
+  policy = data.aws_iam_policy_document.capstone_s3_tf_state_access.json
+  name = "${var.environment}-tf-state-group-policy"
+}
+
+data "aws_iam_policy_document" "capstone_s3_access" {
   statement {
     actions = [
       "s3:*Get*"]
@@ -47,7 +71,6 @@ data "aws_iam_policy_document" "capstone_s3_read_access" {
       "s3:GetBucketPublicAccessBlock"]
     resources = [
       "*",
-      "arn:aws:s3:::${local.s3_bucket}",
     ]
   }
 }
@@ -197,6 +220,7 @@ data "aws_iam_policy_document" "capstone_ecr_access" {
       "ecr:CompleteLayerUpload",
       "ecr:GetDownloadUrlForLayer",
       "ecr:BatchCheckLayerAvailability",
+      "ecr:ListTagsForResource",
       "ecr:InitiateLayerUpload",
       "ecr:PutImage",
       "ecr:UploadLayerPart"]
@@ -247,5 +271,15 @@ data "aws_iam_policy_document" "pass_mwaa_role" {
       "iam:ListRoles"]
     resources = [
       "*"]
+  }
+}
+
+data "aws_iam_policy_document" "parameter_store_access" {
+  statement {
+    actions = [
+      "ssm:GetParameter",
+      "ssm:GetParameters"]
+    resources = [
+      "arn:aws:ssm:${var.region}:${var.account_id}:parameter/${var.environment}/*"]
   }
 }
