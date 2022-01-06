@@ -171,7 +171,6 @@ data "aws_iam_policy_document" "capstone_batch_access" {
 data "aws_iam_policy_document" "capstone_ecr_access" {
   statement {
     actions = [
-      "ecr:CreateRepository",
       "ecr:BatchGetImage",
       "ecr:DescribeImages",
       "ecr:DescribeRepositories",
@@ -185,7 +184,13 @@ data "aws_iam_policy_document" "capstone_ecr_access" {
       "ecr:PutImage",
       "ecr:UploadLayerPart"]
     resources = [
-      "arn:aws:ecr:eu-west-1:338791806049:repository/*"]
+      "arn:aws:ecr:eu-west-1:338791806049:repository/$${aws:username}"]
+  }
+  statement {
+    actions = [
+      "ecr:CreateRepository"]
+    resources = [
+      "arn:aws:ecr:eu-west-1:338791806049:repository/${aws:username}"]
   }
   statement {
     actions = [
