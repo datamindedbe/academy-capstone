@@ -81,8 +81,50 @@ This requires you to execute the following steps:
 5) ??
 6) Profit
 
+IMPORTANT NOTES:
+- While using the AWS console, make sure you are in the `eu-west-1` region
+- Most resources you create will require a name that starts with your AWS username
+- Where applicable, you will need to tag every resource you create with:
+  
+  `environment`: `academy-capstone-winter-2022`
+
 ### Step 1: Containerize
 Create a `Dockerfile` that packages your application. You can start from one of our Data Minded images
 which pre-installs PySpark and it's dependencies: put `FROM public.ecr.aws/dataminded/spark-k8s-glue:v3.1.2-hadoop-3.3.1` at the top of your Dockerfile.
 
 ### Step 2: Push your image to an ECR repository
+Through the AWS console, create a private ECR repository. It's name should start with your AWS username.
+After creation, push your docker image to this repo.
+
+### Step 3: Create a batch job definition
+With your image pushed to the repository, navigate to AWS Batch and create a new Job Definition. Apply the following configuration:
+- Name: Make sure it starts with your AWS username
+- Platform type: EC2
+- Container properties:
+    - Image: Image you pushed during the previous step
+    - Command: Depends on your image:)
+    - Job role configuration: `academy-capstone-winter-2022-batch-job-role`
+- Tags:
+  - `environment`: `academy-capstone-winter-2022`
+  
+After creating the job definition you can run it by submitting a new job. Again, apply the correct naming convention and tags. 
+You can submit the job to the following queue: `academy-capstone-winter-2022-job-queue`
+
+### Step 4: Scheduling through MWAA
+To conclude this capstone project, you will setup an Airflow environment and upload a DAG that triggers your AWS Batch job.
+
+Navigate to MWAA in the AWS console and create a new environment. Apply the following configuration:
+- Naming convetion and tags still apply
+- S3 Bucket: `s3://dataminded-academy-capstone-resources`
+- DAGs folder: s3://dataminded-academy-capstone-resources/{YOUR_AWS_USERNAME}/dags
+- Switch `web server access` to `Public network` 
+- UNcheck `create new security group` and select `academy-capstone-winter-2022-mwaa-sg` under the existing SG dropdown menu
+- Check all logs and set log level to INFO
+- Select `academy-capstone-winter-2022-mwaa-role` as the execution role
+
+Following successfull creation you can access the Airflow Web UI through the link in the console.
+
+Finally, create a DAG that triggers a batch job and upload it in the previously specified DAG folder on S3. It should pop up in the Airflow UI where you can trigger it manually.
+
+
+If the Airflow triggered Batch job ran successfully: Congratulations! You've completed the Data Minded Academy Capstone!

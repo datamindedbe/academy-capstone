@@ -11,7 +11,6 @@ from academy_capstone.util.snowflake import get_snowflake_creds_from_sm
 
 
 def main():
-    aws_region = os.environ.get("AWS_REGION")
     additional_spark_config = {}
     if os.environ.get("RUN_LOCAL"):
         additional_spark_config.update({
@@ -27,7 +26,7 @@ def main():
 
         sfOptions = get_snowflake_creds_from_sm("snowflake/capstone/login")
         sfOptions.update({
-            "sfSchema": "MICHIEL_ACADEMY_WINTER_2022_TEST",
+            "sfSchema": "TUTOR_WINTER2022",
             "dbtable": "TEMP"
         }
         )

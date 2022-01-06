@@ -10,8 +10,7 @@ data "aws_iam_policy_document" "capstone_s3_read_access" {
       "s3:*Get*"]
     resources = [
       "arn:aws:s3:::${local.s3_bucket}/${local.s3_path}/*",
-      "arn:aws:s3:::${local.s3_bucket}/${local.s3_dags_folder}/*",
-      "arn:aws:s3:::${local.s3_bucket}/mwaa_config/*",
+      "arn:aws:s3:::${local.s3_bucket}/$${aws:username}/${local.s3_dags_folder}/*",
     ]
   }
   statement {
@@ -34,7 +33,7 @@ data "aws_iam_policy_document" "capstone_s3_read_access" {
       "s3:*DeleteObject*"
     ]
     resources = [
-      "arn:aws:s3:::${local.s3_bucket}/${local.s3_dags_folder}/*",
+      "arn:aws:s3:::${local.s3_bucket}/$${aws:username}/${local.s3_dags_folder}/*",
     ]
   }
   statement {
@@ -75,17 +74,26 @@ data "aws_iam_policy_document" "capstone_mwaa_access" {
     actions = [
       "airflow:CreateEnvironment",
       "airflow:DeleteEnvironment",
+      "airflow:TagResource",
+      "airflow:UnTagResource",
       "airflow:GetEnvironment",
       "airflow:UpdateEnvironment"
     ]
     resources = [
-      "arn:aws:airflow:${var.region}:${var.account_id}:environment/*"]
+      "arn:aws:airflow:${var.region}:${var.account_id}:environment/$${aws:username}*"]
+    condition {
+      test = "StringEquals"
+      values = [
+        var.environment]
+      variable = "aws:ResourceTag/environment"
+    }
   }
   statement {
     actions = [
       "airflow:CreateWebLoginToken"
     ]
-    resources = ["arn:aws:airflow:eu-west-1:338791806049:role/*"]
+    resources = [
+      "arn:aws:airflow:eu-west-1:338791806049:role/*"]
   }
   statement {
     actions = [
@@ -144,13 +152,21 @@ data "aws_iam_policy_document" "capstone_batch_access" {
   statement {
     actions = [
       "batch:SubmitJob",
+      "batch:TagResource",
       "batch:RegisterJobDefinition",
       "batch:DeregisterJobDefinition"
     ]
     resources = [
-      "arn:aws:batch:eu-west-1:338791806049:job-queue/${var.batch_job_queue}",
-      "arn:aws:batch:eu-west-1:338791806049:job-definition/*"
+      "arn:aws:batch:${var.region}:${var.account_id}:job-queue/${var.batch_job_queue}",
+      "arn:aws:batch:${var.region}:${var.account_id}:job-definition/$${aws:username}*",
+      "arn:aws:batch:${var.region}:${var.account_id}:job/$${aws:username}*"
     ]
+    condition {
+      test = "StringEquals"
+      values = [
+        var.environment]
+      variable = "aws:ResourceTag/environment"
+    }
   }
   statement {
     actions = [
@@ -171,6 +187,7 @@ data "aws_iam_policy_document" "capstone_batch_access" {
 data "aws_iam_policy_document" "capstone_ecr_access" {
   statement {
     actions = [
+      "ecr:CreateRepository",
       "ecr:BatchGetImage",
       "ecr:DescribeImages",
       "ecr:DescribeRepositories",
@@ -184,13 +201,14 @@ data "aws_iam_policy_document" "capstone_ecr_access" {
       "ecr:PutImage",
       "ecr:UploadLayerPart"]
     resources = [
-      "arn:aws:ecr:eu-west-1:338791806049:repository/$${aws:username}"]
+      "arn:aws:ecr:${var.region}:${var.account_id}:repository/$${aws:username}*"]
   }
   statement {
     actions = [
-      "ecr:CreateRepository"]
+      "ecr:DescribeRepositories",
+    ]
     resources = [
-      "arn:aws:ecr:eu-west-1:338791806049:repository/${aws:username}"]
+      "arn:aws:ecr:${var.region}:${var.account_id}:repository/*"]
   }
   statement {
     actions = [
