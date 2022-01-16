@@ -1,5 +1,6 @@
 ports:
-  - port: 8080
+  - port: 4040 # pyspark UI
+    onOpen: notify
 tasks:
   - name: setup
     init: |
