@@ -16,7 +16,6 @@ RUN wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -O ./awscliv2.
     rm -rf ./aws awscliv2.zip
 
 USER gitpod
-RUN echo "{ [ -f /workspace/gitpodissue/venv/bin/activate ] && source /workspace/gitpodissue/venv/bin/activate ;} || :" >> /home/gitpod/.bashrc
 
 EXPOSE 3000
 EXPOSE 8080
