@@ -7,7 +7,9 @@ tasks:
       source venv/bin/activate
       pip install pyspark
       deactivate
-      # Apply workaround for https://github.com/gitpod-io/gitpod/pull/7534
+      # Apply fix for ValueError / AccumulatorServer errors
+      #   - https://github.com/gitpod-io/gitpod/issues/7628
+      #   - https://github.com/gitpod-io/gitpod/pull/7534
       accs="$(t="venv/lib/python*"; echo $t)/site-packages/pyspark/accumulators.py"
       sed -i "s/localhost/127\.0\.0\.2/g" $accs
     command: |
