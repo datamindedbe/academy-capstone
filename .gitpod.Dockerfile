@@ -1,7 +1,7 @@
 FROM gitpod/workspace-full
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV SPARK_LOCAL_IP=127.0.0.1
+ENV SPARK_LOCAL_IP=0.0.0.0
 
 USER root
 # Install apt packages and clean up cached files
