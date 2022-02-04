@@ -1,5 +1,5 @@
 resource "snowflake_database" "database" {
-  name = upper(replace("${var.group}-database", "-", "_"))
+  name = upper(replace("${var.group}-capstone-database", "-", "_"))
 }
 
 resource snowflake_schema participants-schemas {
