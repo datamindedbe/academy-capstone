@@ -1,13 +1,13 @@
 ports:
-  - port: 8080
+  - port: 4040 # pyspark UI
+    onOpen: notify
 tasks:
   - name: setup
-    before: |
-      python3 -m venv /workspace/academy-capstone/venv
-      source /workspace/academy-capstone/venv/bin/activate
-      echo "source /workspace/academy-capstone/venv/bin/activate" >> ~/.bashrc
-      export SPARK_LOCAL_IP=127.0.0.1
-      echo "export SPARK_LOCAL_IP=127.0.0.1" >> ~/.bashrc
+    init: |
+      python3 -m venv venv
+    command: |
+      echo "source $(pwd)/venv/bin/activate" >> ~/.bashrc
+      source venv/bin/activate
 image:
   file: .gitpod.Dockerfile
 github:
