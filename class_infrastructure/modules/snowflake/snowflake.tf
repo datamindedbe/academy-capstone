@@ -87,6 +87,7 @@ resource "snowflake_role_grants" "grants" {
 
 resource "aws_secretsmanager_secret" "snowflake_login" {
   name = var.secret_name
+  recovery_window_in_days = 0
 }
 
 resource "aws_secretsmanager_secret_version" "snowflake_login" {
