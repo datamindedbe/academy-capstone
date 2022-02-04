@@ -1,13 +1,21 @@
 ports:
-  - port: 8080
+  - port: 4040 # pyspark UI
+    onOpen: notify
 tasks:
   - name: setup
-    before: |
-      python3 -m venv /workspace/academy-capstone/venv
-      source /workspace/academy-capstone/venv/bin/activate
-      echo "source /workspace/academy-capstone/venv/bin/activate" >> ~/.bashrc
-      export SPARK_LOCAL_IP=127.0.0.1
-      echo "export SPARK_LOCAL_IP=127.0.0.1" >> ~/.bashrc
+    init: |
+      python3 -m venv venv
+      source venv/bin/activate
+      pip install pyspark
+      deactivate
+      # Apply fix for ValueError / AccumulatorServer errors
+      #   - https://github.com/gitpod-io/gitpod/issues/7628
+      #   - https://github.com/gitpod-io/gitpod/pull/7534
+      accs="$(t="venv/lib/python*"; echo $t)/site-packages/pyspark/accumulators.py"
+      sed -i "s/localhost/127\.0\.0\.2/g" $accs
+    command: |
+      echo "source $(pwd)/venv/bin/activate" >> ~/.bashrc
+      source venv/bin/activate
 image:
   file: .gitpod.Dockerfile
 github:
