@@ -1,0 +1,13 @@
+docker:
+  path: .
+id: e0050de5-c74e-4726-9bad-3f5cd99ee313
+name: academy-capstone
+resources:
+  path: resources
+streaming:
+  filename: streaming.yaml
+template: ""
+version: "0.3"
+workflows:
+  path: datafy-dags
+  version: "2"
