@@ -14,7 +14,6 @@ You can access this environment by clicking the button below:
 This is an ubuntu-based environment pre-installed with:
 - VSCode
 - A Python3 virtual environment, we recommend you always work inside this environment
-- Pyspark in said virtualenv
 - The AWS cli
 
 Before you commence data crunching, set up your `.aws/credentials` file. This required to access AWS services through the API.
@@ -27,15 +26,6 @@ Default output format [None]: json
 ```
 IMPORTANT: Create a new branch and periodically push your work to the remote. After 30min of inactivity this
 environment shuts down and you will lose unsaved progress.
-
-## A note on PySpark
-Due to known issues with gitpod networking, PySpark is functional but will throw Accumulator errors continuously as it 
-listens by default to a host in use by gitpod. Therefore we pre-installed PySpark in the virtual environment and applied
-a patch to resolve this error. If you are interested, you can find more information here:
-- https://github.com/gitpod-io/gitpod/issues/7628
-- https://github.com/gitpod-io/gitpod/pull/7534
-
-Keep in mind that if you re-install PySpark this patch will be removed and you will receive the error. Just gives us a ping and we'll resolve it.
 
 ## Task 1: Extract, transform and load weather data from S3 to Snowflake
 Our team recently ingested Belgian weather data from the [openaq](https://openaq.org/) API and stored it on AWS S3
