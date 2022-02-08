@@ -22,3 +22,4 @@ variable "region" {
 variable "environment" {}
 variable "batch_job_queue" {}
 variable "vpc_id" {}
+variable "sm_key_arn" {}

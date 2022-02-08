@@ -31,6 +31,7 @@ module "iam" {
   environment = local.env_name
   batch_job_queue = module.batch.job_queue
   vpc_id = module.vpc.vpc_id
+  sm_key_arn = module.snowflake.sm_kms_key_arn
 }
 
 module "snowflake" {

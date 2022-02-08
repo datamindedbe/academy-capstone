@@ -41,6 +41,8 @@ data "aws_iam_policy_document" "default" {
     ]
     resources = [
       "arn:aws:s3:::*",
+      "arn:aws:s3:::dataminded-academy-capstone-resources/*",
+      "arn:aws:s3:::dataminded-academy-capstone-resources",
     ]
     effect = "Allow"
   }
@@ -48,7 +50,8 @@ data "aws_iam_policy_document" "default" {
     actions = [
       "secretsmanager:ListSecrets"]
     resources = [
-      "*"]
+      "*",
+      "arn:aws:secretsmanager:eu-west-1:338791806049:secret:snowflake/capstone/login"]
   }
   statement {
     actions = [
@@ -56,6 +59,11 @@ data "aws_iam_policy_document" "default" {
       "secretsmanager:DescribeSecret",
       "secretsmanager:ListSecretVersionIds"]
     resources = [
-      "*"]
+      "*",
+      "arn:aws:secretsmanager:eu-west-1:338791806049:secret:snowflake/capstone/login"]
+  }
+  statement {
+    actions = ["kms:Decrypt"]
+    resources = ["arn:aws:kms:eu-west-1:338791806049:key/f66c11df-10b3-424a-a801-02aed8d7f592"]
   }
 }

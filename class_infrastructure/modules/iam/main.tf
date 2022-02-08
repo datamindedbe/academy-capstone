@@ -13,10 +13,14 @@ resource "aws_iam_group_policy_attachment" "capstone_participants_ssm_role_group
   policy_arn = aws_iam_policy.tf_state_policy.arn
 }
 
-resource "aws_iam_group_policy" "capstone_participants_sm_group_policy" {
+resource "aws_iam_group_policy_attachment" "capstone_participants_sm_role_group_policy" {
   group = local.group_name
-  name = "${local.group_name}-sm-read-access"
+  policy_arn = aws_iam_policy.sm_role_policy.arn
+}
+
+resource "aws_iam_policy" "sm_role_policy" {
   policy = data.aws_iam_policy_document.capstone_secret_read_access.json
+  name = "${var.environment}-sm-role-group-policy"
 }
 
 resource "aws_iam_group_policy" "capstone_participants_mwaa_group_policy" {

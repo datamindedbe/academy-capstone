@@ -12,7 +12,7 @@ from academy_capstone.util.snowflake import get_snowflake_creds_from_sm
 
 def main():
     additional_spark_config = {}
-    if os.environ.get("RUN_LOCAL"):
+    if os.environ.get("RUN_LOCAL"): # when running locally, this setting allows to check for AWS env vars or profile
         additional_spark_config.update({
             "fs.s3a.aws.credentials.provider": "com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
         })
@@ -24,12 +24,13 @@ def main():
 
         SNOWFLAKE_SOURCE_NAME = "net.snowflake.spark.snowflake"
 
-        sfOptions = get_snowflake_creds_from_sm("snowflake/capstone/login")
+        sfOptions = get_snowflake_creds_from_sm("arn:aws:secretsmanager:eu-west-1:338791806049:secret:snowflake/capstone/login")
         sfOptions.update({
-            "sfSchema": "TUTOR_WINTER2022",
+            "sfSchema": "CAPSTONE_TUTOR",
             "dbtable": "TEMP"
         }
         )
+        logging.info(sfOptions)
         write_df_with_options(df, format=SNOWFLAKE_SOURCE_NAME, options=sfOptions, mode="overwrite")
 
 

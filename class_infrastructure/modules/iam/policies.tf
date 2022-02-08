@@ -90,6 +90,10 @@ data "aws_iam_policy_document" "capstone_secret_read_access" {
     resources = [
       "arn:aws:secretsmanager:*:*:secret:${var.participants_permissions.secret_access.secret}*"]
   }
+  statement {
+    actions = ["kms:Decrypt"]
+    resources = [var.sm_key_arn]
+  }
 }
 
 data "aws_iam_policy_document" "capstone_mwaa_access" {

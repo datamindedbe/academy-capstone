@@ -88,6 +88,8 @@ resource "snowflake_role_grants" "grants" {
 resource "aws_secretsmanager_secret" "snowflake_login" {
   name = var.secret_name
   recovery_window_in_days = 0
+  kms_key_id = aws_kms_key.sm_key.id
+  policy = data.aws_iam_policy_document.secret_policy.json
 }
 
 resource "aws_secretsmanager_secret_version" "snowflake_login" {
@@ -102,4 +104,42 @@ resource "aws_secretsmanager_secret_version" "snowflake_login" {
     "ROLE": snowflake_role.participants_role.name
   }
   )
+}
+
+resource "aws_kms_key" "sm_key" {
+  policy = data.aws_iam_policy_document.sm_key.json
+}
+
+data "aws_iam_policy_document" "sm_key" {
+  statement {
+    effect = "Allow"
+    principals {
+      identifiers = ["arn:aws:iam::130966031144:root"]
+      type = "AWS"
+    }
+    actions = ["kms:Decrypt",
+    "kms"]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Allow"
+    principals {
+      identifiers = ["338791806049"]
+      type = "AWS"
+    }
+    actions = ["kms:*"]
+    resources = ["*"]
+  }
+}
+
+data "aws_iam_policy_document" "secret_policy" {
+  statement {
+    effect = "Allow"
+    principals {
+      identifiers = ["arn:aws:iam::130966031144:root"]
+      type = "AWS"
+    }
+    actions = ["secretsmanager:GetSecretValue"]
+    resources = ["*"]
+  }
 }
