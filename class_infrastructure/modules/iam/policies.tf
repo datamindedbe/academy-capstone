@@ -246,6 +246,11 @@ data "aws_iam_policy_document" "capstone_ecr_access" {
   }
 }
 
+resource "aws_iam_policy" "ecr_policy" {
+  policy = data.aws_iam_policy_document.capstone_ecr_access.json
+  name = "${var.environment}-ecrr-group-policy"
+}
+
 data "aws_iam_policy_document" "pass_batch_job_role" {
   statement {
     actions = [

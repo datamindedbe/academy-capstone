@@ -36,7 +36,7 @@ module "iam" {
 
 module "snowflake" {
   source = "../../modules/snowflake"
-  group = "academy-winter-2022"
+  group = local.participants_permissions.group
   secret_name = local.participants_permissions.secret_access.secret
 }
 

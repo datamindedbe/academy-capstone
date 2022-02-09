@@ -22,5 +22,3 @@ provider "snowflake" {
 data "aws_secretsmanager_secret_version" "snowflake_admin" {
   secret_id = "snowflake/terraform/password"
 }
-
-provider "random" {}

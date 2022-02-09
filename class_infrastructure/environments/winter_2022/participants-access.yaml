@@ -1,4 +1,4 @@
-group: academy-winter-2022
+group: academy-class
 s3_access:
   bucket: dataminded-academy-capstone-resources
   path: raw

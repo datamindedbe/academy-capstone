@@ -35,10 +35,9 @@ resource "aws_iam_group_policy" "capstone_participants_batch_group_policy" {
   policy = data.aws_iam_policy_document.capstone_batch_access.json
 }
 
-resource "aws_iam_group_policy" "capstone_participants_ecr_group_policy" {
+resource "aws_iam_group_policy_attachment" "capstone_participants_ecr_role_group_policy" {
   group = local.group_name
-  name = "${local.group_name}-ecr-access"
-  policy = data.aws_iam_policy_document.capstone_ecr_access.json
+  policy_arn = aws_iam_policy.ecr_policy.arn
 }
 
 resource "aws_iam_group_policy" "capstone_participants_pass_batch_role_group_policy" {
