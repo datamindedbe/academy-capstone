@@ -6,7 +6,7 @@ from pathlib import Path
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as psf
 from pyspark.sql.functions import col, to_timestamp
-
+import json
 #add jars to use aws cli in pyspark 
 spark = SparkSession.builder.appName("capstone").config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:3.1.2').getOrCreate()
 
@@ -64,3 +64,9 @@ flatframe = flatframe.withColumn("date_local_timestamp",to_timestamp('date_local
 flatframe = flatframe.withColumn("date_utc_timestamp",to_timestamp('date_utc'))
 
 flatframe.printSchema()
+
+#step2
+client = boto3.client('secretsmanager') 
+response = client.get_secret_value( SecretId='snowflake/capstone/login' ) 
+database_secrets = json.loads(response['SecretString']) 
+print(database_secrets)
