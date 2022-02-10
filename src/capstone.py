@@ -8,7 +8,7 @@ import pyspark.sql.functions as psf
 from pyspark.sql.functions import col, to_timestamp
 import json
 #add jars to use aws cli in pyspark 
-spark = SparkSession.builder.appName("capstone").config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:3.1.2').getOrCreate()
+spark = SparkSession.builder.appName("capstone").config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:3.1.2,net.snowflake:spark-snowflake_2.12:2.9.0-spark_3.1,net.snowflake:snowflake-jdbc:3.13.3').getOrCreate()
 
 #add credentials
 #print(os.environ["AWS_SECRET_VALUE"])
@@ -25,7 +25,7 @@ spark.sparkContext._jsc.hadoopConfiguration().set("fs.s3a.impl", "org.apache.had
 
 #to load the all the json files into a frame
 frame=spark.read.format('org.apache.spark.sql.json') \
-        .load("s3a://dataminded-academy-capstone-resources/raw/open_aq/data_part_1.json") #change later to *.json
+        .load("s3a://dataminded-academy-capstone-resources/raw/open_aq/*.json") #change later to *.json
 frame.show()
 frame.printSchema()
 
@@ -70,3 +70,16 @@ client = boto3.client('secretsmanager')
 response = client.get_secret_value( SecretId='snowflake/capstone/login' ) 
 database_secrets = json.loads(response['SecretString']) 
 print(database_secrets)
+
+sfOptions = {
+"sfURL": f"{database_secrets['URL']}.snowflakecomputing.com/",
+"sfUser": f"{database_secrets['USER_NAME']}",
+"sfPassword" : f"{database_secrets['PASSWORD']}",
+"sfDatabase": f"{database_secrets['DATABASE']}",
+"sfSchema": "VEDAVYAS",
+"sfWarehouse": f"{database_secrets['WAREHOUSE']}",
+"parallelism": "64",
+"dbtable":"VV_table",
+}
+
+flatframe.write.format("net.snowflake.spark.snowflake").options(**sfOptions).mode("overwrite").save()
