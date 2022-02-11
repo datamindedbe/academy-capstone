@@ -229,7 +229,7 @@ data "aws_iam_policy_document" "capstone_ecr_access" {
       "ecr:PutImage",
       "ecr:UploadLayerPart"]
     resources = [
-      "arn:aws:ecr:${var.region}:${var.account_id}:repository/$${aws:username}*"]
+      "arn:aws:ecr:${var.region}:${var.account_id}:repository/*"]
   }
   statement {
     actions = [
