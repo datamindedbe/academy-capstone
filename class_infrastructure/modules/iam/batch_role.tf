@@ -50,6 +50,7 @@ data "aws_iam_policy_document" "additional_batch_s3_access" {
   statement {
     actions = [
       "s3:*PutObject*",
+      "s3:*Get*",
       "s3:*DeleteObject*"
     ]
     resources = [
