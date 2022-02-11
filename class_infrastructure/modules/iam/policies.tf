@@ -99,11 +99,23 @@ data "aws_iam_policy_document" "capstone_secret_read_access" {
 data "aws_iam_policy_document" "capstone_mwaa_access" {
   statement {
     actions = [
+      "airflow:GetEnvironment",
+    ]
+    resources = [
+      "arn:aws:airflow:${var.region}:${var.account_id}:environment/*"]
+    condition {
+      test = "StringEquals"
+      values = [
+        var.environment]
+      variable = "aws:ResourceTag/environment"
+    }
+  }
+  statement {
+    actions = [
       "airflow:CreateEnvironment",
       "airflow:DeleteEnvironment",
       "airflow:TagResource",
       "airflow:UnTagResource",
-      "airflow:GetEnvironment",
       "airflow:UpdateEnvironment"
     ]
     resources = [
