@@ -19,6 +19,24 @@ EOF
 }
 
 data "aws_iam_policy_document" "mwaa_role_policy" {
+    statement {
+    actions = [
+      "batch:SubmitJob",
+    ]
+    resources = [
+      "arn:aws:batch:${var.region}:${var.account_id}:job-queue/${var.batch_job_queue}",
+      "arn:aws:batch:${var.region}:${var.account_id}:job-definition/*",
+      "arn:aws:batch:${var.region}:${var.account_id}:job/*"
+    ]
+  }
+  statement {
+    actions = [
+      "s3:*Get*"]
+    resources = [
+      "arn:aws:s3:::${local.s3_bucket}/*",
+      "arn:aws:s3:::${local.s3_bucket}/*/${local.s3_dags_folder}/*",
+    ]
+  }
   statement {
     actions = [
       "logs:CreateLogStream",
