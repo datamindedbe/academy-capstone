@@ -45,3 +45,22 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
   role       = aws_iam_role.job_role.name
 }
+
+data "aws_iam_policy_document" "additional_batch_s3_access" {
+  statement {
+    actions = [
+      "s3:*PutObject*",
+      "s3:*DeleteObject*"
+    ]
+    resources = [
+      "arn:aws:s3:::${local.s3_bucket}/*/ingest/*",
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "additional_batch_s3" {
+  policy = data.aws_iam_policy_document.additional_batch_s3_access.json
+  role = aws_iam_role.job_role.id
+  name = "batch-additional-s3-read-access"
+
+}

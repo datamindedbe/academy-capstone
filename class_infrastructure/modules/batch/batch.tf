@@ -98,8 +98,8 @@ resource "aws_batch_compute_environment" "default" {
       launch_template_id = aws_launch_template.default.id
     }
 
-    max_vcpus     = 128
-    min_vcpus     = 16
+    max_vcpus     = 8
+    min_vcpus     = 0
     desired_vcpus = 0
     security_group_ids = [
       aws_security_group.batch_instance.id
