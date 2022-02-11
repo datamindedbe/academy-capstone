@@ -31,12 +31,17 @@ resource "aws_iam_role_policy" "secret_manager" {
   role = aws_iam_role.job_role.id
 }
 
-resource "aws_iam_role_policy_attachment" "preprocessor_pipeline_role_batch_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AWSBatchFullAccess"
-  role       = aws_iam_role.job_role.name
-}
+//resource "aws_iam_role_policy_attachment" "preprocessor_pipeline_role_batch_policy" {
+//  policy_arn = "arn:aws:iam::aws:policy/AWSBatchFullAccess"
+//  role       = aws_iam_role.job_role.name
+//}
 
 resource "aws_iam_role_policy_attachment" "preprocessor_pipeline_role_cloudwatch_policy" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchEventsFullAccess"
+  role       = aws_iam_role.job_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
   role       = aws_iam_role.job_role.name
 }
