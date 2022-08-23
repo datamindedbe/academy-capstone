@@ -90,11 +90,7 @@ IMPORTANT NOTES:
 
 ### Step 1: Containerize
 Create a `Dockerfile` that packages your application. You can start from one of our Data Minded images
-<<<<<<< HEAD
 which pre-installs PySpark and it's dependencies: put `FROM public.ecr.aws/dataminded/spark-k8s-glue:v3.1.2-hadoop-3.3.1` at the top of your Dockerfile.
-=======
-which pre-installs Spark and it's dependencies: put `FROM public.ecr.aws/dataminded/spark-k8s-glue:v3.1.2-hadoop-3.3.1` at the top of your Dockerfile.
->>>>>>> main
 
 ### Step 2: Push your image to an ECR repository
 Through the AWS console, create a private ECR repository. It's name should start with your AWS username.
@@ -104,18 +100,11 @@ After creation, push your docker image to this repo.
 With your image pushed to the repository, navigate to AWS Batch and create a new Job Definition. Apply the following configuration:
 - Name: Make sure it starts with your AWS username
 - Platform type: EC2
-<<<<<<< HEAD
-- Job configuration:
-    - Image: Image you pushed during the previous step
-    - Command: Depends on your image:)
-    - Execution role: `academy-capstone-winter-2022-batch-job-role`
-=======
 - Execution role: `academy-capstone-winter-2022-batch-job-role`
 - Job configuration:
     - Image: Image you pushed during the previous step
     - Command: Depends on your image:)
     - Job Role Configuration: `academy-capstone-winter-2022-batch-job-role`
->>>>>>> main
 - Tags:
   - `environment`: `academy-capstone-winter-2022`
   
@@ -135,18 +124,13 @@ Navigate to MWAA in the AWS console and create a new environment. Apply the foll
 - Check all logs and set log level to INFO
 - Select `academy-capstone-winter-2022-mwaa-role` as the execution role
 
-<<<<<<< HEAD
 Creation of an MWAA environment can take up to 20 minutes.
-=======
->>>>>>> main
-Following successfull creation you can access the Airflow Web UI through the link in the console.
+Following successful creation you can access the Airflow Web UI through the link in the console.
 
 Finally, create a DAG that triggers a batch job and upload it in the previously specified DAG folder on S3. It should pop up in the Airflow UI where you can trigger it manually.
 
 
 If the Airflow triggered Batch job ran successfully: Congratulations! You've completed the Data Minded Academy Capstone!
-<<<<<<< HEAD
-=======
 
 ## Bonus: Writing and scheduling an air quality data ingest job
 In case you finished the capstone but want to expand your pipeline, feel free to create an ingest job which fetches air quality data and stores it in S3.
