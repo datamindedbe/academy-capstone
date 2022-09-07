@@ -15,7 +15,7 @@ task1 = AwsBatchOperator(
     dag=dag,
     task_id="snowflake_ingest",
     job_definition="capstone-tutor-job-definition",
-    job_queue="academy-capstone-winter-2022-default",
+    job_queue="academy-capstone-summer-2022-job-queue",
     job_name="snowflake_ingest_tutor",
     overrides={}
 )

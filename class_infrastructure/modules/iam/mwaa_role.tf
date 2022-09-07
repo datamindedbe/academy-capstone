@@ -56,12 +56,6 @@ data "aws_iam_policy_document" "mwaa_role_policy" {
     resources = [
       "*"]
   }
-//  statement {
-//    actions = [
-//      "airflow:PublishMetrics"]
-//    resources = [
-//      "arn:aws:airflow:${var.region}:${var.account_id}:environment/*"]
-//  }
 
   statement {
     actions = [
@@ -87,11 +81,6 @@ data "aws_iam_policy_document" "mwaa_role_policy" {
       variable = "kms:ViaService"
     }
   }
-//  statement {
-//    actions = [
-//    "cloudwatch:PutMetricData"]
-//    resources = ["*"]
-//  }
 }
 
 resource "aws_iam_role_policy" "mwaa_policy" {

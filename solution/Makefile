@@ -1,6 +1,7 @@
 version := $(shell git describe --tags --always --first-parent --abbrev=7 --dirty=.dirty)
-ecr_repo := capstone-tutor-academy-capstone-winter-2022
-dags_s3_folder := s3://dataminded-academy-capstone-resources/dags/capstone-tutor
+user_name:= nahian_muntasir
+ecr_repo := $(user_name)-academy-capstone-summer-2022
+dags_s3_folder := s3://dataminded-academy-capstone-resources/$(user_name)/dags
 
 test:
 	pytest tests

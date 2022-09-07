@@ -23,10 +23,14 @@ resource "aws_iam_policy" "sm_role_policy" {
   name = "${var.environment}-sm-role-group-policy"
 }
 
-resource "aws_iam_group_policy" "capstone_participants_mwaa_group_policy" {
-  group = local.group_name
-  name = "${local.group_name}-mwaa-access"
+resource "aws_iam_policy" "mwaa_role_policy" {
   policy = data.aws_iam_policy_document.capstone_mwaa_access.json
+  name = "${var.environment}-mwaa-role-group-policy"
+}
+
+resource "aws_iam_group_policy_attachment" "capstone_participants_mwaa_role_group_policy" {
+  group = local.group_name
+  policy_arn = aws_iam_policy.mwaa_role_policy.arn
 }
 
 resource "aws_iam_group_policy" "capstone_participants_batch_group_policy" {
