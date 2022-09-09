@@ -28,6 +28,7 @@ def main():
         sfOptions.update({
             "sfSchema": "CAPSTONE_TUTOR",
             "dbtable": "TEMP"
+
         }
         )
         logging.info(sfOptions)

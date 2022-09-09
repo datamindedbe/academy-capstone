@@ -96,7 +96,7 @@ resource "aws_secretsmanager_secret_version" "snowflake_login" {
   secret_id = aws_secretsmanager_secret.snowflake_login.id
   secret_string = jsonencode(
   {
-    "URL": "yw41113.eu-west-1",
+    "URL": "yw41113.eu-west-1.snowflakecomputing.com",
     "PASSWORD": snowflake_user.user.password,
     "USER_NAME": snowflake_user.user.login_name,
     "WAREHOUSE": snowflake_warehouse.wh.name,

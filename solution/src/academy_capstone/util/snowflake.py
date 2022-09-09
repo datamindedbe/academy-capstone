@@ -10,12 +10,10 @@ def get_snowflake_creds_from_sm(secret_name: str):
     response = client.get_secret_value(
         SecretId=secret_name
     )
-    # sess = boto3.Session(region_name="eu-west-1")
-    #
-    # response = wr.secretsmanager.get_secret_json(secret_name, boto3_session=sess)
+
     creds = json.loads(response['SecretString'])
     return {
-        "sfURL": f"{creds['URL']}.snowflakecomputing.com",
+        "sfURL": f"{creds['URL']}",
         "sfPassword": creds["PASSWORD"],
         "sfUser": creds["USER_NAME"],
         "sfDatabase": creds["DATABASE"],

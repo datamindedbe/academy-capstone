@@ -98,15 +98,15 @@ resource "aws_batch_compute_environment" "default" {
       launch_template_id = aws_launch_template.default.id
     }
 
-    max_vcpus     = 8
+    max_vcpus     = 10
     min_vcpus     = 0
-    desired_vcpus = 0
+    desired_vcpus = 5
     security_group_ids = [
       aws_security_group.batch_instance.id
     ]
     subnets             = var.private_subnet_ids
-    type                = "SPOT"
-    allocation_strategy = "SPOT_CAPACITY_OPTIMIZED"
+    type                = "EC2"
+#    allocation_strategy = "SPOT_CAPACITY_OPTIMIZED"
     bid_percentage      = 100
     spot_iam_fleet_role = aws_iam_role.batch_spot_fleet.arn
 
