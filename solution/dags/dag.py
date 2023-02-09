@@ -1,7 +1,7 @@
 import datetime
 
 from airflow import DAG
-from airflow.providers.amazon.aws.operators.batch import AwsBatchOperator
+from airflow.providers.amazon.aws.operators.batch import BatchOperator
 
 dag = DAG(
     dag_id="capstone-tutor-dag",
@@ -11,11 +11,11 @@ dag = DAG(
     catchup=False,
 )
 
-task1 = AwsBatchOperator(
+task1 = BatchOperator(
     dag=dag,
     task_id="snowflake_ingest",
     job_definition="capstone-tutor-job-definition",
-    job_queue="academy-capstone-summer-2022-job-queue",
+    job_queue="academy-capstone-winter-2023-job-queue",
     job_name="snowflake_ingest_tutor",
     overrides={}
 )

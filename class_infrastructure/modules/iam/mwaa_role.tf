@@ -31,9 +31,12 @@ data "aws_iam_policy_document" "mwaa_role_policy" {
   }
   statement {
     actions = [
-      "s3:*Get*"]
+      "s3:*Get*",
+      "s3:*List*"
+    ]
     resources = [
       "arn:aws:s3:::${local.s3_bucket}/*",
+      "arn:aws:s3:::${local.s3_bucket}",
       "arn:aws:s3:::${local.s3_bucket}/*/${local.s3_dags_folder}/*",
     ]
   }
@@ -83,10 +86,13 @@ data "aws_iam_policy_document" "mwaa_role_policy" {
   }
 }
 
-resource "aws_iam_role_policy" "mwaa_policy" {
+resource "aws_iam_policy" "mwaa_policy" {
   policy = data.aws_iam_policy_document.mwaa_role_policy.json
-  role = aws_iam_role.mwaa_role.id
   name = "${local.group_name}-mwaa-policy"
+}
+resource "aws_iam_role_policy_attachment" "mwaa_batch_iam_policy" {
+  policy_arn = aws_iam_policy.mwaa_policy.arn
+  role = aws_iam_role.mwaa_role.name
 }
 
 resource "aws_iam_role_policy" "capstone_mwaa_s3_access" {
@@ -95,10 +101,10 @@ resource "aws_iam_role_policy" "capstone_mwaa_s3_access" {
   policy = data.aws_iam_policy_document.capstone_s3_access.json
 }
 
-//resource "aws_iam_role_policy_attachment" "mwaa_cloudwatch_policy" {
-//  policy_arn = "arn:aws:iam::aws:policy/CloudWatchEventsFullAccess"
-//  role = aws_iam_role.mwaa_role.name
-//}
+resource "aws_iam_role_policy_attachment" "mwaa_cloudwatch_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchEventsFullAccess"
+  role = aws_iam_role.mwaa_role.name
+}
 
 resource "aws_iam_role_policy" "capstone_mwaa_batch_access" {
   role = aws_iam_role.mwaa_role.id

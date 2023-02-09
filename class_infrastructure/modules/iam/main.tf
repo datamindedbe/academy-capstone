@@ -2,10 +2,14 @@ locals {
   group_name = var.participants_permissions.group
 }
 
-resource "aws_iam_group_policy" "capstone_participants_s3_group_policy" {
-  group = local.group_name
-  name = "${local.group_name}-s3-read-access"
+resource "aws_iam_policy" "capstone_participants_s3_group_policy" {
+  name = "${local.group_name}-s3-read-access-policy"
   policy = data.aws_iam_policy_document.capstone_s3_access.json
+}
+
+resource "aws_iam_group_policy_attachment" "capstone_participants_s3_group_policy_attachment" {
+  group = local.group_name
+  policy_arn = aws_iam_policy.capstone_participants_s3_group_policy.arn
 }
 
 resource "aws_iam_group_policy_attachment" "capstone_participants_ssm_role_group_policy" {
@@ -50,10 +54,14 @@ resource "aws_iam_group_policy" "capstone_participants_pass_batch_role_group_pol
   policy = data.aws_iam_policy_document.pass_batch_job_role.json
 }
 
-resource "aws_iam_group_policy" "capstone_participants_pass_mwaa_role_group_policy" {
-  group = local.group_name
-  name = "${local.group_name}-pass-mwaa-role"
+resource "aws_iam_policy" "capstone_participants_pass_mwaa_role_policy" {
+  name = "${local.group_name}-pass-mwaa-role-policy"
   policy = data.aws_iam_policy_document.pass_mwaa_role.json
+}
+
+resource "aws_iam_group_policy_attachment" "capstone_participants_pass_mwaa_role_group_policy" {
+  group = local.group_name
+  policy_arn = aws_iam_policy.capstone_participants_pass_mwaa_role_policy.arn
 }
 
 resource "aws_iam_group_policy" "capstone_participants_ssm_role_group_policy" {

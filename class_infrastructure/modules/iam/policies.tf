@@ -58,6 +58,8 @@ data "aws_iam_policy_document" "capstone_s3_access" {
     ]
     resources = [
       "arn:aws:s3:::${local.s3_bucket}/$${aws:username}/${local.s3_dags_folder}/*",
+      "arn:aws:s3:::${local.s3_bucket}/${local.s3_dags_folder}/*",
+      "arn:aws:s3:::${local.s3_bucket}/${local.s3_dags_folder}",
       "arn:aws:s3:::${local.s3_bucket}/$${aws:username}",
       "arn:aws:s3:::${local.s3_bucket}/$${aws:username}/*",
       "arn:aws:s3:::${local.s3_bucket}/$${aws:username}/ingest/*",
@@ -122,7 +124,9 @@ data "aws_iam_policy_document" "capstone_mwaa_access" {
       "airflow:UpdateEnvironment"
     ]
     resources = [
-      "arn:aws:airflow:${var.region}:${var.account_id}:environment/$${aws:username}*"]
+      "arn:aws:airflow:${var.region}:${var.account_id}:environment/$${aws:username}*",
+      "arn:aws:airflow:${var.region}:${var.account_id}:environment/*",
+    ]
     condition {
       test = "StringEquals"
       values = [
