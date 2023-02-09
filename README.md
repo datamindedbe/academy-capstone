@@ -2,15 +2,14 @@
 Welcome to the Capstone project! During the next 1.5 days you will apply everything you've learned during the past days 
 in an integrated exercise. You will:
 1) Read, transform and load weather data from S3 to Snowflake through PySpark
-2) Build dashboards with SQL on Snowflake
-3) Take a stab at running your application on AWS through Docker, AWS Batch and Airflow
+2) Take a stab at running your application on AWS through Docker, AWS Batch and Airflow
+3) Run your pipeline on our inhouse tool Conveyor to experience a more complete solution
 
 ## Getting started
 We set up a gitpod environment containing all the tools required to complete this exercise (awscli, python, vscode, ...).
 You can access this environment by clicking the button below:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/datamindedbe/academy-capstone)
-
 NOTE: When you push to your own remote make sure to change the Gitpod URL to reflect your account in this README!
 
 This is an ubuntu-based environment pre-installed with:
@@ -27,7 +26,7 @@ Default region name [None]: eu-west-1
 Default output format [None]: json
 ```
 IMPORTANT: Create a new branch and periodically push your work to the remote. After 30min of inactivity this
-environment shuts down and you will lose unsaved progress.
+environment shuts down and you will lose unsaved progress. As stated before, change the GitPod URL to reflect your remote.
 
 ## Task 1: Extract, transform and load weather data from S3 to Snowflake
 Our team recently ingested Belgian weather data from the [openaq](https://openaq.org/) API and stored it on AWS S3
@@ -73,7 +72,7 @@ This requires you to execute the following steps:
 1) Containerize your application through Docker
 2) Create an ECR repository and push your image
 3) Create a batch job definition which runs your application (and test it for good measure)
-4) Set up an MWAA environment and create/push a DAG that trigger a batch job using your job definition
+4) Create and upload a DAG that trigger a batch job using your job definition to a pre-created MWAA environment
 5) ??
 6) Profit
 
@@ -86,10 +85,10 @@ IMPORTANT NOTES:
 
 ### Step 1: Containerize
 Create a `Dockerfile` that packages your application. You can start from one of our Data Minded images
-which pre-installs Spark and it's dependencies: put `FROM public.ecr.aws/dataminded/spark-k8s-glue:v3.1.2-hadoop-3.3.1` at the top of your Dockerfile.
+which pre-installs Spark and its dependencies: put `FROM public.ecr.aws/dataminded/spark-k8s-glue:v3.1.2-hadoop-3.3.1` at the top of your Dockerfile.
 
 ### Step 2: Push your image to an ECR repository
-Through the AWS console, create a private ECR repository. It's name should start with your AWS username.
+Through the AWS console, create a private ECR repository. Its name should start with your AWS username.
 After creation, push your docker image to this repo.
 
 ### Step 3: Create a batch job definition
@@ -108,13 +107,18 @@ After creating the job definition you can run it by submitting a new job. Again,
 You can submit the job to the following queue: `academy-capstone-winter-2023-job-queue`
 
 ### Step 4: Scheduling through MWAA
-To conclude this capstone project, create a DAG that triggers your AWS Batch job and upload it to an MWAA environment created for you.
-You will find the environment by navigating to MWAA in the AWS console under the name `shared-mwaa-env`. Upload your DAG to the following folder: `dags`.
+To conclude this  part, create a DAG that triggers your AWS Batch job and upload it to an MWAA environment created for you.
+You will find your environment by navigating to MWAA in the AWS console under the name `<YOUR_USER_NAME>-mwaa-env`. Upload your DAG to the DAG folder specified in your MWAA environment.
 You can access the Airflow Web UI through the link in the console.
 
-After a successful upload, your DAG should be visible in the Airflow UI.
+After a successful upload, your DAG should be visible in the Airflow UI and can be triggered.
 
-If the Airflow triggered Batch job ran successfully: Congratulations! You've completed the Data Minded Academy Capstone!
+## Task 3: Conveyor
+On Friday afternoon you will receive a brief introduction to Conveyor and will be tasked with deploying your code on the Conveyor platform.
+You will need to keep a couple changes in mind as Conveyor runs in a different AWS account:
+- The accountid is `130966031144`
+- The bucket containing the raw files is `dataminded-academy-capstone-resources2`
+
 
 ## Bonus 1: Writing and scheduling an air quality data ingest job
 In case you finished the capstone but want to expand your pipeline, feel free to create an ingest job which fetches air quality data and stores it in S3.
