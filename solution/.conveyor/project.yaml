@@ -1,0 +1,13 @@
+docker:
+    path: .
+id: 60ace465-aaad-430f-a2aa-6940646ba006
+name: capstone-tutor-winter-2023
+resources:
+    path: resources
+streaming:
+    filename: streaming.yaml
+template: pyspark
+version: "0.3"
+workflows:
+    path: dags
+    version: "2"

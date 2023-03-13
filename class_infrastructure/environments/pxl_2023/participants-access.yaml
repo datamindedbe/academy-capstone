@@ -1,0 +1,11 @@
+group: academy-class
+users:
+  - user_1
+  - user_2
+  - user_3
+s3_access:
+  bucket: dataminded-academy-capstone-resources
+  path: raw
+  dags_folder: dags
+secret_access:
+  secret: snowflake/capstone/login
