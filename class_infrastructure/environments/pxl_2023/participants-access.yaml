@@ -6,6 +6,8 @@ users:
   - Stan@pxl
   - Sam@pxl
   - Serge@pxl
+  - SamVanRijn@pxl
+  - Tim@pxl
 s3_access:
   bucket: dataminded-academy-capstone-resources
   path: raw

@@ -31,6 +31,12 @@ resource "aws_iam_user_login_profile" "participant" {
   pgp_key = "keybase:${var.keybase_user}"
 }
 
+resource "aws_iam_user_group_membership" "membership" {
+  for_each = local.participants
+  user = aws_iam_user.participant[each.value].name
+  groups = [aws_iam_group.participants.name]
+}
+
 output "iam_console_password" {
   value = [for p in aws_iam_user_login_profile.participant : p.encrypted_password]
 }

@@ -34,6 +34,7 @@ data "aws_iam_policy_document" "capstone_s3_access" {
       "s3:*Get*"]
     resources = [
       "arn:aws:s3:::${local.s3_bucket}/${local.s3_path}/*",
+      "arn:aws:s3:::${local.s3_bucket}/${local.s3_path}/*/*",
       "arn:aws:s3:::${local.s3_bucket}/$${aws:username}/${local.s3_dags_folder}/*",
       "arn:aws:s3:::${local.s3_bucket}/${local.s3_dags_folder}/*",
     ]

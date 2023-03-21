@@ -46,11 +46,11 @@ module "vpc" {
     "10.1.104.0/24"
   ]
 }
-#module "mwaa" {
-#  source                   = "../../modules/mwaa"
-#  environment              = local.env_name
-#  vpc_id                   = module.vpc.vpc_id
-#  mwaa_role_arn            = module.iam.mwaa_role_arn
-#  subnet_ids               = join(",", module.vpc.private_subnet_ids)
-#  participants_permissions = local.participants_permissions
-#}
+module "mwaa" {
+  source                   = "../../modules/mwaa"
+  environment              = local.env_name
+  vpc_id                   = module.vpc.vpc_id
+  mwaa_role_arn            = module.iam.mwaa_role_arn
+  subnet_ids               = join(",", module.vpc.private_subnet_ids)
+  participants_permissions = local.participants_permissions
+}
