@@ -1,8 +1,11 @@
 group: academy-class
 users:
-  - user_1
-  - user_2
-  - user_3
+  - oliver_student
+  - Nele@pxl
+  - Johan@pxl
+  - Stan@pxl
+  - Sam@pxl
+  - Serge@pxl
 s3_access:
   bucket: dataminded-academy-capstone-resources
   path: raw
