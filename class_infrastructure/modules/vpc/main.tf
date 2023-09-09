@@ -9,7 +9,7 @@ locals {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.70.0"
+  version = "5.1.2"
 
   name = "vpc-${var.environment}"
   cidr = var.vpc_cidr
@@ -30,9 +30,6 @@ module "vpc" {
   single_nat_gateway     = true
   enable_nat_gateway     = true
   one_nat_gateway_per_az = false
-
-  enable_s3_endpoint       = true
-
 
   tags = local.tags
 }

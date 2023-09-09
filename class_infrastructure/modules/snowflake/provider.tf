@@ -1,12 +1,13 @@
 provider "aws" {
   region = "eu-west-1"
+  profile = "instructor"
 }
 
 terraform {
   required_providers {
     snowflake = {
-      source = "chanzuckerberg/snowflake"
-      version = "0.25.31"
+      source = "Snowflake-Labs/snowflake"
+      version = "0.70.1"
     }
   }
 }
