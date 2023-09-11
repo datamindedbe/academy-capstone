@@ -24,7 +24,7 @@ module "batch" {
   env_name           = local.env_name
   private_subnet_ids = module.vpc.private_subnet_ids
   vpc_id             = module.vpc.vpc_id
-  allowed_cidrs      = [
+  allowed_cidrs = [
     module.vpc.vpc_cidr_block
   ]
 }
@@ -33,7 +33,7 @@ module "vpc" {
   source      = "../../modules/vpc"
   environment = local.env_name
   vpc_cidr    = "10.1.0.0/16"
-  azs         = [
+  azs = [
     "eu-west-1c",
     "eu-west-1a"
   ]
@@ -46,6 +46,23 @@ module "vpc" {
     "10.1.104.0/24"
   ]
 }
+
+
+module "endpoints" {
+  source = "terraform-aws-modules/vpc/aws//modules/vpc-endpoints"
+
+  vpc_id             = module.vpc.vpc_id
+  security_group_ids = [module.vpc.default_security_group_id]
+
+  endpoints = {
+    s3 = {
+      service         = "s3"
+      service_type    = "Gateway"
+      route_table_ids = module.vpc.private_route_table_ids
+    },
+  }
+}
+
 module "mwaa" {
   source                   = "../../modules/mwaa"
   environment              = local.env_name
