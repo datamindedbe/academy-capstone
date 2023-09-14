@@ -114,7 +114,7 @@ IMPORTANT NOTES:
 - Most resources you create will require a name that starts with your AWS username
 - Where applicable, you will need to tag every resource you create with:
   
-  `environment`: `academy-capstone-pxl-2023`
+  `environment`: `academy-capstone-summer-2023`
 
 ### Step 1: Containerize
 
@@ -132,16 +132,16 @@ With your image pushed to the repository, navigate to AWS Batch and create a new
 
 - Name: Make sure it starts with your AWS username
 - Platform type: EC2
-- Execution role: `academy-capstone-pxl-2023-batch-job-role`
+- Execution role: `academy-capstone-summer-2023-batch-job-role`
 - Job configuration:
     - Image: Image you pushed during the previous step
     - Command: Depends on your image:)
-    - Job Role Configuration: `academy-capstone-pxl-2023-batch-job-role`
+    - Job Role Configuration: `academy-capstone-summer-2023-batch-job-role`
 - Tags:
-  - `environment`: `academy-capstone-pxl-2023`
+  - `environment`: `academy-capstone-summer-2023`
   
 After creating the job definition you can run it by submitting a new job. Again, apply the correct naming convention and tags. 
-You can submit the job to the following queue: `academy-capstone-pxl-2023-job-queue`
+You can submit the job to the following queue: `academy-capstone-summer-2023-job-queue`
 
 ### Step 4: Scheduling through MWAA
 
