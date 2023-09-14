@@ -56,6 +56,14 @@ resource "snowflake_grant_privileges_to_role" "schema_grants" {
   with_grant_option = false
 }
 
+resource "snowflake_grant_privileges_to_role" "schema_future_grants" {
+  privileges = ["USAGE", "CREATE TABLE"]
+  role_name  = snowflake_role.participants_role.name
+  on_schema {
+    future_schemas_in_database = snowflake_database.database.name
+  }
+  with_grant_option = false
+}
 resource "snowflake_grant_privileges_to_role" "database_grant" {
   privileges = ["USAGE"]
   role_name  = snowflake_role.participants_role.name
